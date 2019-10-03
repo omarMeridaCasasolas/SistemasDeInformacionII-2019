@@ -14,9 +14,10 @@ drop table if exists Vendedor;
 /*==============================================================*/
 create table AdmFarmacia
 (
-   idAdmFarmacia varchar(25) not null,
+   idAdmFarmacia int not null,
    nomAdmFarmacia varchar(50) not null,
    ciAdmFarmacia varchar(15) not null,
+   dirAdmFarmacia varchar(50) not null,
    telAdmFarmacia varchar(15) not null,
    primary key (idAdmFarmacia)
 );
@@ -26,11 +27,11 @@ create table AdmFarmacia
 /*==============================================================*/
 create table AdmAlmacen
 (
-   idAdmAlmacen varchar(20) not null,
-   ciAdmAlmacen varchar(15) not null,
+   idAdmAlmacen int not null,
    nomAdmAlmacen varchar(50) not null,
+   ciAdmAlmacen varchar(15) not null,
    dirAdmAlmacen varchar(50) not null,
-   telAdmAlmacen varchar(10),
+   telAdmAlmacen varchar(10) not null,
    primary key (idAdmAlmacen)
 );
 
@@ -39,11 +40,11 @@ create table AdmAlmacen
 /*==============================================================*/
 create table Vendedor
 (
-   idVendedor       varchar(25) not null,
-   ciVendedor       varchar(25) not null,
-   nomVendedor   varchar(50) not null,
+   idVendedor int not null,
+   nomVendedor Varchar(50) not null,
+   ciVendedor varchar(25) not null,
    dirVendedor varchar(50) not null,
-   telVendedor  varchar(10),
+   telVendedor int not null,
    primary key (idVendedor)
 );
 
