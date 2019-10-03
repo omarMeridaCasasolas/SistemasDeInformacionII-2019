@@ -124,24 +124,34 @@ public class WindowLogin extends javax.swing.JFrame {
         Conexion cn = new Conexion();
         if(cn.conectar()){
             try{
-                ResultSet rs = cn.rs("select * from admFarmacia where idAdmFarmacia = '"+username+"'");
-                if(rs.next()){
+                ResultSet rsu = cn.rs("select * from admFarmacia where idAdmFarmacia = '"+username+"'");
+                ResultSet rsp = cn.rs("select * from admFarmacia where ciAdmFarmacia = '"+pasword+"'");
+                if(rsu.next() && rsp.next()){
                     res = 1;
+                    rsu.close();
+                    rsp.close();
                 }else{
-                    rs = cn.rs("select * from admAlmacen where idAdmAlmacen = '"+username+"'");
-                    if(rs.next()){
+                    System.out.println("estas aqui");
+                    rsu = cn.rs("select * from admAlmacen where idAdmAlmacen = '"+username+"'");
+                    rsp = cn.rs("select * from admAlmacen where idAdmAlmacen = '"+pasword+"'");
+                    if(rsu.next() && rsp.next()){
                         res = 2;
+                        rsu.close();
+                        rsp.close();
                     }else{
-                            rs = cn.rs("select * from vendedor where idVendedor = '"+username+"'");
-                            if(rs.next()){
+                            rsu = cn.rs("select * from vendedor where idVendedor = '"+username+"'");
+                            rsp = cn.rs("select * from vendedor where ciVendedor = '"+pasword+"'");
+                            if(rsu.next() && rsp.next()){
                                 res = 3;
+                                rsp.close();
+                                rsu.close();
                             }
                     }
                 }
-                cn.desconectar();
             }catch(SQLException e){
                 System.out.println(e.getMessage());
             }
+            cn.desconectar();
         }
         return res;
     }
