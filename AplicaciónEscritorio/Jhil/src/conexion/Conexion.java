@@ -1,5 +1,6 @@
 package conexion;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -18,5 +19,15 @@ public class Conexion {
             System.out.println(e.getMessage());
         }
         return con;
+    }
+    public boolean desconectar(){
+        boolean exit = true;
+        try {
+            con.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            exit = false;
+        }
+        return exit;
     }
 }
