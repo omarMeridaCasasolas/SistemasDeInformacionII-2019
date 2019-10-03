@@ -4,51 +4,51 @@
 /*==============================================================*/
 
 
-drop table if exists ADMINISTRADORDEFARMACIA;
+drop table if exists AdminFarmacia;
 
-drop table if exists ADMINISTRATORDEALMACEN;
+drop table if exists AdminAlmacen;
 
-drop table if exists CLIENTE;
+drop table if exists Cliente;
 
-drop table if exists CONTRATO;
+drop table if exists Contrato;
 
-drop table if exists FARMAUCEUTICO;
+drop table if exists Vendedor;
 
-drop table if exists LOGINEMPLEADO;
+drop table if exists LoginEmpleado;
 
-drop table if exists MEDICAMENTO;
+drop table if exists Medicamento;
 
-drop table if exists PROMOCION;
+drop table if exists Promocion;
 
-drop table if exists PROVEEDOR;
+drop table if exists Proveedor;
 
-drop table if exists RELATIONSHIP_1;
+drop table if exists Relacion_1;
 
-drop table if exists RELATIONSHIP_15;
+drop table if exists Relacion_2;
 
-drop table if exists RELATIONSHIP_4;
+drop table if exists Relacion_3;
 
-drop table if exists RESERVA;
+drop table if exists Reserva;
 
-drop table if exists VENTA;
+drop table if exists Venta;
 
 /*==============================================================*/
-/* Table: ADMINISTRADORDEFARMACIA                               */
+/* Table: AdminFarmacia                               */
 /*==============================================================*/
-create table ADMINISTRADORDEFARMACIA
+create table AdminFarmacia
 (
    IDADMINISTRADORFARMACIA varchar(25) not null,
    NOMBREADMINISTRADODEFARMACIA varchar(50) not null,
-   CIADMINISTRADORDEFARMACIA varchar(15) not null,
-   CELULARADMINISTRADORDEFARMACIA varchar(15) not null,
-   DIRECCIONFARMACEUTICO varchar(50) not null,
+   CIAdminFarmacia varchar(15) not null,
+   CELULARAdminFarmacia varchar(15) not null,
+   DIRECCIONVendedor varchar(50) not null,
    primary key (IDADMINISTRADORFARMACIA)
 );
 
 /*==============================================================*/
-/* Table: ADMINISTRATORDEALMACEN                                */
+/* Table: AdminAlmacen                                */
 /*==============================================================*/
-create table ADMINISTRATORDEALMACEN
+create table AdminAlmacen
 (
    IDADMINISTRADORDEALMACEN varchar(20) not null,
    CIADMINISTRADORDEALMACEN varchar(15) not null,
@@ -59,195 +59,195 @@ create table ADMINISTRATORDEALMACEN
 );
 
 /*==============================================================*/
-/* Table: CLIENTE                                               */
+/* Table: Cliente                                               */
 /*==============================================================*/
-create table CLIENTE
+create table Cliente
 (
-   IDCLIENTE            varchar(25) not null,
-   CARNETDEIDENTIDADCLIENTE varchar(25) not null,
+   IDCliente            varchar(25) not null,
+   CARNETDEIDENTIDADCliente varchar(25) not null,
    NOMBREPACIENTE       varchar(50) not null,
    ENFERMEDAD           varchar(200),
-   LOGINEMPLEADO        varchar(15) not null,
+   LoginEmpleado        varchar(15) not null,
    PASSWORD             varchar(15) not null,
-   primary key (IDCLIENTE)
+   primary key (IDCliente)
 );
 
 /*==============================================================*/
-/* Table: CONTRATO                                              */
+/* Table: Contrato                                              */
 /*==============================================================*/
-create table CONTRATO
+create table Contrato
 (
-   IDCONTRATO           varchar(25) not null,
-   IDFARMACEUTICO       varchar(25) not null,
+   IDContrato           varchar(25) not null,
+   IDVendedor       varchar(25) not null,
    IDADMINISTRADORDEALMACEN varchar(20) not null,
    PAGOMENSUAL          float(8,2) not null,
-   primary key (IDCONTRATO)
+   primary key (IDContrato)
 );
 
 /*==============================================================*/
-/* Table: FARMAUCEUTICO                                         */
+/* Table: Vendedor                                         */
 /*==============================================================*/
-create table FARMAUCEUTICO
+create table Vendedor
 (
-   IDFARMACEUTICO       varchar(25) not null,
-   CIFARMACEUTICO       varchar(25) not null,
-   NOMBREFARMACEUTICO   varchar(50) not null,
-   DIRECCIONFARMACEUTICO varchar(50) not null,
-   CELULARFARMACEUTICO  varchar(10),
-   primary key (IDFARMACEUTICO)
+   IDVendedor       varchar(25) not null,
+   CIVendedor       varchar(25) not null,
+   NOMBREVendedor   varchar(50) not null,
+   DIRECCIONVendedor varchar(50) not null,
+   CELULARVendedor  varchar(10),
+   primary key (IDVendedor)
 );
 
 /*==============================================================*/
-/* Table: LOGINEMPLEADO                                         */
+/* Table: LoginEmpleado                                         */
 /*==============================================================*/
-create table LOGINEMPLEADO
+create table LoginEmpleado
 (
-   IDLOGINEMPLEADO      varchar(25) not null,
+   IDLoginEmpleado      varchar(25) not null,
    IDADMINISTRADORFARMACIA varchar(25) not null,
-   IDFARMACEUTICO       varchar(25) not null,
+   IDVendedor       varchar(25) not null,
    IDADMINISTRADORDEALMACEN varchar(20) not null,
-   LOGINEMPLEADO        varchar(15) not null,
+   LoginEmpleado        varchar(15) not null,
    PASSEMPLEADO         varchar(15) not null,
    CARGO                varchar(25) not null,
-   primary key (IDLOGINEMPLEADO)
+   primary key (IDLoginEmpleado)
 );
 
 /*==============================================================*/
-/* Table: MEDICAMENTO                                           */
+/* Table: Medicamento                                           */
 /*==============================================================*/
-create table MEDICAMENTO
+create table Medicamento
 (
-   IDMEDICAMENTO        varchar(50) not null,
-   NOMBREMEDICAMENTO    varchar(50) not null,
+   IDMedicamento        varchar(50) not null,
+   NOMBREMedicamento    varchar(50) not null,
    CODIGOSENASAG        varchar(20) not null,
    PREESCRIPCION        bool not null,
    PRECIO               float(8,2) not null,
-   PRECIODEVENTA        float(8,2) not null,
+   PRECIODEVenta        float(8,2) not null,
    DOSIS                int not null,
-   primary key (IDMEDICAMENTO)
+   primary key (IDMedicamento)
 );
 
 /*==============================================================*/
-/* Table: PROMOCION                                             */
+/* Table: Promocion                                             */
 /*==============================================================*/
-create table PROMOCION
+create table Promocion
 (
-   IDPROMOCION          varchar(20) not null,
-   NOMBREDEPROMOCION    varchar(30) not null,
-   TIPODEPROMOCION      varchar(20) not null,
-   primary key (IDPROMOCION)
+   IDPromocion          varchar(20) not null,
+   NOMBREDEPromocion    varchar(30) not null,
+   TIPODEPromocion      varchar(20) not null,
+   primary key (IDPromocion)
 );
 
 /*==============================================================*/
-/* Table: PROVEEDOR                                             */
+/* Table: Proveedor                                             */
 /*==============================================================*/
-create table PROVEEDOR
+create table Proveedor
 (
-   IDPROVEEDOR          varchar(20) not null,
-   IDMEDICAMENTO        varchar(50) not null,
+   IDProveedor          varchar(20) not null,
+   IDMedicamento        varchar(50) not null,
    TIPODEPROVEEDDOR     varchar(20) not null,
-   CORREOELECTRONICOPROVEEDOR varchar(40) not null,
-   primary key (IDPROVEEDOR)
+   CORREOELECTRONICOProveedor varchar(40) not null,
+   primary key (IDProveedor)
 );
 
 /*==============================================================*/
-/* Table: RELATIONSHIP_1                                        */
+/* Table: Relacion_1                                        */
 /*==============================================================*/
-create table RELATIONSHIP_1
+create table Relacion_1
 (
-   IDVENTA              varchar(30) not null,
-   IDMEDICAMENTO        varchar(50) not null,
-   primary key (IDVENTA, IDMEDICAMENTO)
+   IDVenta              varchar(30) not null,
+   IDMedicamento        varchar(50) not null,
+   primary key (IDVenta, IDMedicamento)
 );
 
 /*==============================================================*/
-/* Table: RELATIONSHIP_15                                       */
+/* Table: Relacion_2                                       */
 /*==============================================================*/
-create table RELATIONSHIP_15
+create table Relacion_2
 (
-   IDMEDICAMENTO        varchar(50) not null,
-   IDPROMOCION          varchar(20) not null,
-   primary key (IDMEDICAMENTO, IDPROMOCION)
+   IDMedicamento        varchar(50) not null,
+   IDPromocion          varchar(20) not null,
+   primary key (IDMedicamento, IDPromocion)
 );
 
 /*==============================================================*/
-/* Table: RELATIONSHIP_4                                        */
+/* Table: Relacion_3                                        */
 /*==============================================================*/
-create table RELATIONSHIP_4
+create table Relacion_3
 (
-   IDMEDICAMENTO        varchar(50) not null,
-   IDRESERVA            varchar(25) not null,
-   primary key (IDMEDICAMENTO, IDRESERVA)
+   IDMedicamento        varchar(50) not null,
+   IDReserva            varchar(25) not null,
+   primary key (IDMedicamento, IDReserva)
 );
 
 /*==============================================================*/
-/* Table: RESERVA                                               */
+/* Table: Reserva                                               */
 /*==============================================================*/
-create table RESERVA
+create table Reserva
 (
-   IDRESERVA            varchar(25) not null,
-   IDCLIENTE            varchar(25) not null,
-   FECHARESERVA         date not null,
-   HORARESERVA          time not null,
-   primary key (IDRESERVA)
+   IDReserva            varchar(25) not null,
+   IDCliente            varchar(25) not null,
+   FECHAReserva         date not null,
+   HORAReserva          time not null,
+   primary key (IDReserva)
 );
 
 /*==============================================================*/
-/* Table: VENTA                                                 */
+/* Table: Venta                                                 */
 /*==============================================================*/
-create table VENTA
+create table Venta
 (
-   IDVENTA              varchar(30) not null,
-   IDFARMACEUTICO       varchar(25) not null,
-   IDCLIENTE            varchar(25) not null,
-   HORADEVENTA          time not null,
-   FECHADEVENTA         date not null,
+   IDVenta              varchar(30) not null,
+   IDVendedor       varchar(25) not null,
+   IDCliente            varchar(25) not null,
+   HORADEVenta          time not null,
+   FECHADEVenta         date not null,
    TOTAL                float(8,2) not null,
-   primary key (IDVENTA)
+   primary key (IDVenta)
 );
 
-alter table CONTRATO add constraint FK_RELATIONSHIP_10 foreign key (IDADMINISTRADORDEALMACEN)
-      references ADMINISTRATORDEALMACEN (IDADMINISTRADORDEALMACEN) on delete restrict on update restrict;
+alter table Contrato add constraint FK_Relacion_10 foreign key (IDADMINISTRADORDEALMACEN)
+      references AdminAlmacen (IDADMINISTRADORDEALMACEN) on delete restrict on update restrict;
 
-alter table CONTRATO add constraint FK_RELATIONSHIP_9 foreign key (IDFARMACEUTICO)
-      references FARMAUCEUTICO (IDFARMACEUTICO) on delete restrict on update restrict;
+alter table Contrato add constraint FK_RELATIONSHIP_9 foreign key (IDVendedor)
+      references Vendedor (IDVendedor) on delete restrict on update restrict;
 
-alter table LOGINEMPLEADO add constraint FK_RELATIONSHIP_17 foreign key (IDADMINISTRADORFARMACIA)
-      references ADMINISTRADORDEFARMACIA (IDADMINISTRADORFARMACIA) on delete restrict on update restrict;
+alter table LoginEmpleado add constraint FK_Relacion_17 foreign key (IDADMINISTRADORFARMACIA)
+      references AdminFarmacia (IDADMINISTRADORFARMACIA) on delete restrict on update restrict;
 
-alter table LOGINEMPLEADO add constraint FK_RELATIONSHIP_18 foreign key (IDFARMACEUTICO)
-      references FARMAUCEUTICO (IDFARMACEUTICO) on delete restrict on update restrict;
+alter table LoginEmpleado add constraint FK_Relacion_18 foreign key (IDVendedor)
+      references Vendedor (IDVendedor) on delete restrict on update restrict;
 
-alter table LOGINEMPLEADO add constraint FK_RELATIONSHIP_19 foreign key (IDADMINISTRADORDEALMACEN)
-      references ADMINISTRATORDEALMACEN (IDADMINISTRADORDEALMACEN) on delete restrict on update restrict;
+alter table LoginEmpleado add constraint FK_Relacion_19 foreign key (IDADMINISTRADORDEALMACEN)
+      references AdminAlmacen (IDADMINISTRADORDEALMACEN) on delete restrict on update restrict;
 
-alter table PROVEEDOR add constraint FK_RELATIONSHIP_6 foreign key (IDMEDICAMENTO)
-      references MEDICAMENTO (IDMEDICAMENTO) on delete restrict on update restrict;
+alter table Proveedor add constraint FK_RELATIONSHIP_6 foreign key (IDMedicamento)
+      references Medicamento (IDMedicamento) on delete restrict on update restrict;
 
-alter table RELATIONSHIP_1 add constraint FK_RELATIONSHIP_1 foreign key (IDVENTA)
-      references VENTA (IDVENTA) on delete restrict on update restrict;
+alter table Relacion_1 add constraint FK_Relacion_1 foreign key (IDVenta)
+      references Venta (IDVenta) on delete restrict on update restrict;
 
-alter table RELATIONSHIP_1 add constraint FK_RELATIONSHIP_7 foreign key (IDMEDICAMENTO)
-      references MEDICAMENTO (IDMEDICAMENTO) on delete restrict on update restrict;
+alter table Relacion_1 add constraint FK_RELATIONSHIP_7 foreign key (IDMedicamento)
+      references Medicamento (IDMedicamento) on delete restrict on update restrict;
 
-alter table RELATIONSHIP_15 add constraint FK_RELATIONSHIP_15 foreign key (IDMEDICAMENTO)
-      references MEDICAMENTO (IDMEDICAMENTO) on delete restrict on update restrict;
+alter table Relacion_2 add constraint FK_Relacion_2 foreign key (IDMedicamento)
+      references Medicamento (IDMedicamento) on delete restrict on update restrict;
 
-alter table RELATIONSHIP_15 add constraint FK_RELATIONSHIP_20 foreign key (IDPROMOCION)
-      references PROMOCION (IDPROMOCION) on delete restrict on update restrict;
+alter table Relacion_2 add constraint FK_RELATIONSHIP_20 foreign key (IDPromocion)
+      references Promocion (IDPromocion) on delete restrict on update restrict;
 
-alter table RELATIONSHIP_4 add constraint FK_RELATIONSHIP_4 foreign key (IDMEDICAMENTO)
-      references MEDICAMENTO (IDMEDICAMENTO) on delete restrict on update restrict;
+alter table Relacion_3 add constraint FK_Relacion_3 foreign key (IDMedicamento)
+      references Medicamento (IDMedicamento) on delete restrict on update restrict;
 
-alter table RELATIONSHIP_4 add constraint FK_RELATIONSHIP_8 foreign key (IDRESERVA)
-      references RESERVA (IDRESERVA) on delete restrict on update restrict;
+alter table Relacion_3 add constraint FK_RELATIONSHIP_8 foreign key (IDReserva)
+      references Reserva (IDReserva) on delete restrict on update restrict;
 
-alter table RESERVA add constraint FK_RELATIONSHIP_5 foreign key (IDCLIENTE)
-      references CLIENTE (IDCLIENTE) on delete restrict on update restrict;
+alter table Reserva add constraint FK_RELATIONSHIP_5 foreign key (IDCliente)
+      references Cliente (IDCliente) on delete restrict on update restrict;
 
-alter table VENTA add constraint FK_RELATIONSHIP_2 foreign key (IDFARMACEUTICO)
-      references FARMAUCEUTICO (IDFARMACEUTICO) on delete restrict on update restrict;
+alter table Venta add constraint FK_RELATIONSHIP_2 foreign key (IDVendedor)
+      references Vendedor (IDVendedor) on delete restrict on update restrict;
 
-alter table VENTA add constraint FK_RELATIONSHIP_3 foreign key (IDCLIENTE)
-      references CLIENTE (IDCLIENTE) on delete restrict on update restrict;
+alter table Venta add constraint FK_RELATIONSHIP_3 foreign key (IDCliente)
+      references Cliente (IDCliente) on delete restrict on update restrict;
 
