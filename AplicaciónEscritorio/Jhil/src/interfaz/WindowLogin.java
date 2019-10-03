@@ -131,7 +131,6 @@ public class WindowLogin extends javax.swing.JFrame {
                     rsu.close();
                     rsp.close();
                 }else{
-                    System.out.println("estas aqui");
                     rsu = cn.rs("select * from admAlmacen where idAdmAlmacen = '"+username+"'");
                     rsp = cn.rs("select * from admAlmacen where idAdmAlmacen = '"+pasword+"'");
                     if(rsu.next() && rsp.next()){

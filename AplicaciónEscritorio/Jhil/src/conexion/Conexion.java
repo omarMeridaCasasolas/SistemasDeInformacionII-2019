@@ -41,7 +41,6 @@ public class Conexion {
         try{
             Statement st = cn.createStatement();
             rs = st.executeQuery(url);
-            st.close();
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
