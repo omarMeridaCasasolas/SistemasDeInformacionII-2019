@@ -1,6 +1,9 @@
 package interfaz;
 
 import javax.swing.JOptionPane;
+import conexion.Conexion;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class WindowLogin extends javax.swing.JFrame {
 
@@ -86,11 +89,12 @@ public class WindowLogin extends javax.swing.JFrame {
 
     //cambia la ventana de acuerdo al usuario que ingresa a la aplicación
     private void loginAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginAcceptActionPerformed
-        int windowNumber = 0;
+        int windowNumber;
         String inUsername = username.getText();
         char[] in = pasword.getPassword();
         String inPasword = new String(in);
         if(inUsername.length() > 0 && inPasword.length() > 0){
+            windowNumber = login(inUsername, inPasword);
             if(windowNumber == 1){
                 WindowPharmacyManager window = new WindowPharmacyManager();
                 window.setVisible(true);
@@ -106,7 +110,7 @@ public class WindowLogin extends javax.swing.JFrame {
                         window.setVisible(true);
                         dispose();
                     }else{
-                        JOptionPane.showMessageDialog(null, "Usuario Incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Usuario no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }        
             }
@@ -115,6 +119,41 @@ public class WindowLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_loginAcceptActionPerformed
 
+    private int login(String username, String pasword){
+        int res = 0;
+        Conexion cn = new Conexion();
+        if(cn.conectar()){
+            try{
+                ResultSet rs = cn.rs("select * from admFarmacia where idAdmFarmacia = '"+username+"'");
+                if(rs.next()){
+                    if(rs.getString("ciAdmFarmacia").equals(pasword)){
+                        res = 1;
+                        rs.close();
+                    }
+                }else{
+                    rs = cn.rs("select * from admAlmacen where idAdmAlmacen = '"+username+"'");
+                    if(rs.next()){
+                        if(rs.getString("ciAdmAlmacen").equals(pasword)){
+                            res = 2;
+                            rs.close();
+                        }
+                    }else{
+                            rs = cn.rs("select * from vendedor where idVendedor = '"+username+"'");
+                            if(rs.next()){
+                                if(rs.getString("ciVendedor").equals(pasword)){
+                                    res = 3;
+                                    rs.close();
+                                }
+                            }
+                    }
+                }
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+            }
+            cn.desconectar();
+        }
+        return res;
+    }
 
     public static void main(String args[]) {
 
