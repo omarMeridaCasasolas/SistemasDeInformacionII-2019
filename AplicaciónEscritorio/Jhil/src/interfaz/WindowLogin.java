@@ -110,7 +110,7 @@ public class WindowLogin extends javax.swing.JFrame {
                         window.setVisible(true);
                         dispose();
                     }else{
-                        JOptionPane.showMessageDialog(null, "Usuario Incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Usuario no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }        
             }
@@ -124,26 +124,26 @@ public class WindowLogin extends javax.swing.JFrame {
         Conexion cn = new Conexion();
         if(cn.conectar()){
             try{
-                ResultSet rsu = cn.rs("select * from admFarmacia where idAdmFarmacia = '"+username+"'");
-                ResultSet rsp = cn.rs("select * from admFarmacia where ciAdmFarmacia = '"+pasword+"'");
-                if(rsu.next() && rsp.next()){
-                    res = 1;
-                    rsu.close();
-                    rsp.close();
+                ResultSet rs = cn.rs("select * from admFarmacia where idAdmFarmacia = '"+username+"'");
+                if(rs.next()){
+                    if(rs.getString("ciAdmFarmacia").equals(pasword)){
+                        res = 1;
+                        rs.close();
+                    }
                 }else{
-                    rsu = cn.rs("select * from admAlmacen where idAdmAlmacen = '"+username+"'");
-                    rsp = cn.rs("select * from admAlmacen where idAdmAlmacen = '"+pasword+"'");
-                    if(rsu.next() && rsp.next()){
-                        res = 2;
-                        rsu.close();
-                        rsp.close();
+                    rs = cn.rs("select * from admAlmacen where idAdmAlmacen = '"+username+"'");
+                    if(rs.next()){
+                        if(rs.getString("ciAdmAlmacen").equals(pasword)){
+                            res = 2;
+                            rs.close();
+                        }
                     }else{
-                            rsu = cn.rs("select * from vendedor where idVendedor = '"+username+"'");
-                            rsp = cn.rs("select * from vendedor where ciVendedor = '"+pasword+"'");
-                            if(rsu.next() && rsp.next()){
-                                res = 3;
-                                rsp.close();
-                                rsu.close();
+                            rs = cn.rs("select * from vendedor where idVendedor = '"+username+"'");
+                            if(rs.next()){
+                                if(rs.getString("ciVendedor").equals(pasword)){
+                                    res = 3;
+                                    rs.close();
+                                }
                             }
                     }
                 }
