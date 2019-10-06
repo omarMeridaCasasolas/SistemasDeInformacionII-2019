@@ -52,6 +52,7 @@ public class Conexion {
             Statement st = cn.createStatement();
             st.executeUpdate(url);
             st.close();
+            res = true;
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
