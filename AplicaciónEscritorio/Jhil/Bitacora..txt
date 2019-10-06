@@ -1,0 +1,61 @@
+
+dia	fecha	hora
+---------------------
+lunes	30	23:16
+
+desframentando en tareas la historia #5 sobre interfáz grafica para los usuarios 
+de la apicación de escritorio (Administrador de Farmacia, Control de Almacen, Atencion al Cliente)
+
+trabajó para crear interfaz de usuario para cada uno de los involucrados con la
+aplicacion de escritorio.
+
+conectó la primera interfaz login con transiciones a las otras interfaces y código
+por harcodeado para las transiciones sin la base de datos
+
+intentó conectarse con xampp (mysql,apache), pero tuvo problemas con los puertos
+para apache.
+
+---------------------
+martes	01	20:42
+
+despues de ver tutoriales en linea la coneción  con xampp(apache, mysql) la hizo
+correctamente.
+
+contruyó un conector para aplicacion a la base de datos
+
+construyó un método para verificar el usuario y contraseña ingresados en la interfáz
+login
+
+conectó la primera interfaz login con transiciones a las otras interfaces y código
+que valida con datos de la BD farmacia
+
+---------------------
+miercoles02	20:16
+
+desfracmentó en tareas la historia #24 Actualizar información de los empleados,
+que servirá para el Administrador de Farmacia
+
+contruyó la interfáz gráfica para Actualizacion de información con todas las
+funcionalidades(llenar cuadros que se actualizaran, guardar cambios, deshacer
+cambios,etc)
+
+construyó una interfáz de busqueda de empleados para apoyar la actualización, esta
+búsqueda la realiza mediante el ID del empleado
+
+---------------------
+jueves	03	20:16
+
+desfracmentó en tareas la historia #20 Registrar información de los empleados,
+que servirá para el Administrador de Farmacia
+
+construyó una interfáz grafica para el registro de nuevos empleados siguiendo
+el detalle de la historia de usuario nro 20
+
+construyó métodos de validación de caracteres para el ingreso de datos a los 
+diferentes campos de la interfaz
+
+---------------------
+viernes	04	20:16
+
+
+

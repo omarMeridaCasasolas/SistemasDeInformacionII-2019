@@ -1,0 +1,30 @@
+Historias divididas en tareas
+
+historia #5 Ingresar a mi cuenta en la aplicación
+
+1.- crear ventana con campos usuario y contraseña, añadir boton de aceptar
+2.- implementar funcionalidad a boton de aceptar(validación, login, transición)
+3.- crear método para validar campos usuario y contraseña
+4.- crear método para iniciar sesion
+5.- crear ventanas vacias para los tres empleados de la farmacia
+6.- crear conector para la base de datos
+
+historia #24 Actualizar información de empleados
+
+1.- modificar ventana de Administrador de Farmacia con nuevo boton ActualizarInformacion
+2.- implementar funcionalidad a boton Actualizar(transición a nueva ventana de busqueda)
+3.- crear nueva ventana de búsqueda con lista de empleados registrados
+4.- crear boton de busqueda, crear campo de busqueda, crear lista de resultado de busqueda
+5.- implementar funcionalidad de boton de busqueda(transición a ventana de actualización)
+6.- crear lista de empleados registrados para mostraros en ventana de busqueda
+7.- crear ventana de modificación de datos de registro
+8.- crear funcionalidad que permita autocompletar datos de empleado en ventana de modificacion
+
+historia #20 Registrar empleados
+
+1.- modificar ventana de Administrador de Farmacia con nuevo boton registrar Empleado
+2.- implementar funcionalidad de boton Registrar(trnsicion a nueva ventana de registro)
+3.- construir ventana de registro
+4.- construir método para validar la informacion ingresada
+5.- construir método para recuperar y guardar informacion de los campos de registro
+

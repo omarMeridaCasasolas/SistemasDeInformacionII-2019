@@ -18,6 +18,11 @@ public class WindowPharmacyManager extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         register.setText("Registrar Personal");
+        register.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerActionPerformed(evt);
+            }
+        });
 
         back.setText("Atras");
         back.addActionListener(new java.awt.event.ActionListener() {
@@ -80,6 +85,10 @@ public class WindowPharmacyManager extends javax.swing.JFrame {
         window.setVisible(true);
         dispose();
     }//GEN-LAST:event_updateActionPerformed
+
+    private void registerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_registerActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
