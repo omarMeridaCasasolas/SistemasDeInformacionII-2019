@@ -110,7 +110,7 @@ public class WindowLogin extends javax.swing.JFrame {
                         window.setVisible(true);
                         dispose();
                     }else{
-                        JOptionPane.showMessageDialog(null, "Usuario no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Usuario no encontrado", "Error al iniciar secion", JOptionPane.ERROR_MESSAGE);
                     }
                 }        
             }
@@ -124,29 +124,20 @@ public class WindowLogin extends javax.swing.JFrame {
         Conexion cn = new Conexion();
         if(cn.conectar()){
             try{
-                ResultSet rs = cn.rs("select * from admFarmacia where idAdmFarmacia = '"+username+"'");
-                if(rs.next()){
-                    if(rs.getString("ciAdmFarmacia").equals(pasword)){
-                        res = 1;
-                        rs.close();
-                    }
-                }else{
-                    rs = cn.rs("select * from admAlmacen where idAdmAlmacen = '"+username+"'");
-                    if(rs.next()){
-                        if(rs.getString("ciAdmAlmacen").equals(pasword)){
-                            res = 2;
-                            rs.close();
-                        }
-                    }else{
-                            rs = cn.rs("select * from vendedor where idVendedor = '"+username+"'");
-                            if(rs.next()){
-                                if(rs.getString("ciVendedor").equals(pasword)){
-                                    res = 3;
-                                    rs.close();
-                                }
-                            }
+                ResultSet rs = cn.rs("select * from EmpFarmacia where idEmp = '"+username+"'");
+                while(rs.next()){
+                    if(rs.getString("ciEmp").equals(pasword)){
+                        if(rs.getString("cargoEmp").equals("AdministracionFarmacia"))
+                            res = 1;
+                        else
+                            if(rs.getString("cargoEmp").equals("ControlAlmacen"))
+                                    res = 2;
+                            else
+                                if(rs.getString("cargoEmp").equals("AtencionCliente"))
+                                        res = 3;
                     }
                 }
+                rs.close();
             }catch(SQLException e){
                 System.out.println(e.getMessage());
             }
@@ -156,7 +147,6 @@ public class WindowLogin extends javax.swing.JFrame {
     }
 
     public static void main(String args[]) {
-
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new WindowLogin().setVisible(true);
