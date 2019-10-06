@@ -3,13 +3,15 @@ package interfaz;
 import conexion.Conexion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 
 public class WindowSearch extends javax.swing.JFrame {
 
     public WindowSearch() {
         initComponents();
-        search();
+        searchAll();
     }
 
     @SuppressWarnings("unchecked")
@@ -92,19 +94,43 @@ public class WindowSearch extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-        String cad = inSearch.getText();
-        if(cad.length() > 0){
-            if(true){
-                //WindowUpdate window = new WindowUpdate();
-                //window.setVisible(true);
+        String nombre = inSearch.getText();
+        if(nombre.length() > 0){
+            String[] datos = search(nombre);
+            if(datos.length > 0){
+                WindowUpdate window = new WindowUpdate(datos);
+                window.setVisible(true);
                 dispose();
             }
         }else{
         
         }
     }//GEN-LAST:event_searchActionPerformed
-
-    private boolean search(){
+    
+    private String[] search(String nom){
+        String res[] = {};
+        Conexion cn = new Conexion();
+        String url = "select * from empFarmacia where nomEmp = '"+nom+"'";
+        cn.conectar();
+        ResultSet rs = cn.rs(url);
+        try {
+            if(rs.next()){
+                res = new String[7];
+                res[0] = rs.getString("nomEmp");
+                res[1] = rs.getString("apeEmp");
+                res[2] = rs.getString("ciEmp");
+                res[3] = rs.getString("fecNacEmp");
+                res[4] = rs.getString("dirEmp");
+                res[5] = rs.getString("telEmp");
+                res[6] = rs.getString("cargoEmp");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(WindowSearch.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return res;
+    }
+    
+    private boolean searchAll(){
         boolean res = false;
         Conexion cn = new Conexion();
         if(cn.conectar()){
