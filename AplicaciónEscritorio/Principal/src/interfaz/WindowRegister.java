@@ -2,13 +2,14 @@
 package interfaz;
 
 import conexion.Conexion;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class WindowUpdate extends javax.swing.JFrame {
-    private static String[] datos;
-    public WindowUpdate(String[] d) {
+public class WindowRegister extends javax.swing.JFrame {
+    public WindowRegister() {
         initComponents();
-        datos = d;
-        charge();
     }
 
     @SuppressWarnings("unchecked")
@@ -30,7 +31,6 @@ public class WindowUpdate extends javax.swing.JFrame {
         back = new javax.swing.JButton();
         save = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        deshacer = new javax.swing.JButton();
         cargo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -69,13 +69,6 @@ public class WindowUpdate extends javax.swing.JFrame {
 
         jLabel7.setText("Cargo");
 
-        deshacer.setText("Deshacer");
-        deshacer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deshacerActionPerformed(evt);
-            }
-        });
-
         cargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AtencionCliente", "ControlAlmacen", "AdministracionFarmacia" }));
         cargo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,8 +98,6 @@ public class WindowUpdate extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(deshacer, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(54, 54, 54)
                         .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(23, 23, 23))
                     .addGroup(layout.createSequentialGroup()
@@ -124,9 +115,9 @@ public class WindowUpdate extends javax.swing.JFrame {
                                     .addComponent(birthDate, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cargo, 0, 192, Short.MAX_VALUE)
-                                    .addComponent(phone))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(cargo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(phone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         layout.setVerticalGroup(
@@ -157,15 +148,14 @@ public class WindowUpdate extends javax.swing.JFrame {
                     .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cargo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(back)
-                    .addComponent(save)
-                    .addComponent(deshacer))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(save))
+                .addContainerGap())
         );
 
         pack();
@@ -181,18 +171,24 @@ public class WindowUpdate extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_backActionPerformed
 
-    private void deshacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deshacerActionPerformed
-        charge();
-    }//GEN-LAST:event_deshacerActionPerformed
-
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-        String url = "update empFarmacia set nomEmp = '"+name.getText()+"', apeEmp = '"+surname.getText()+"', ciEmp = '"+ci.getText()+"', fecNacEmp = '"+birthDate.getText()+"', dirEmp = '"+address.getText()+"', telEmp = '"+phone.getText()+"', cargoEmp = '"+(String)cargo.getSelectedItem()+"' where empfarmacia.idEmp = "+datos[0];
+        String aux = "select max(idEmp) from empfarmacia where cargoEmp = '"+cargo.getSelectedItem().toString()+"'";
         Conexion cn = new Conexion();
         cn.conectar();
-        if(cn.update(url)){
-            WindowSearch window = new WindowSearch();
-            window.setVisible(true);
-            dispose();
+        ResultSet rs = cn.rs(aux);
+        int cod = 37;
+        try {
+            rs.next();
+            cod += rs.getInt(1);
+            String url = "insert into empFarmacia (idEmp, nomEmp, apeEmp, ciEmp, fecNacEmp, dirEmp, telEmp, cargoEmp) ";
+            String datos = "values ('"+cod+"', '"+name.getText()+"', '"+surname.getText()+"', '"+ci.getText()+"', '"+birthDate.getText()+"', '"+address.getText()+"', '"+phone.getText()+"', '"+cargo.getSelectedItem().toString()+"')";
+            if(cn.update(url+datos)){
+                WindowSearch window = new WindowSearch();
+                window.setVisible(true);
+                dispose();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(WindowRegister.class.getName()).log(Level.SEVERE, null, ex);
         }
         cn.desconectar();
     }//GEN-LAST:event_saveActionPerformed
@@ -200,29 +196,12 @@ public class WindowUpdate extends javax.swing.JFrame {
     private void cargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cargoActionPerformed
-    
-    private boolean charge(){
-        boolean res = false;
-        name.setText(datos[1]);
-        surname.setText(datos[2]);
-        ci.setText(datos[3]);
-        birthDate.setText(datos[4]);
-        address.setText(datos[5]);
-        phone.setText(datos[6]);
-        if(datos[7].equals("AdministracionFarmacia"))
-            cargo.setSelectedItem("AdministracionFarmacia");
-        else
-            if(datos[7].equals("ControlAlmacen"))
-                cargo.setSelectedItem("ControlAlmacen");
-            else
-                cargo.setSelectedItem("AtencionCliente");
-        return res;
-    }
+
     
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new WindowUpdate(datos).setVisible(true);
+                new WindowRegister().setVisible(true);
             }
         });
     }
@@ -233,7 +212,6 @@ public class WindowUpdate extends javax.swing.JFrame {
     private javax.swing.JTextField birthDate;
     private javax.swing.JComboBox<String> cargo;
     private javax.swing.JTextField ci;
-    private javax.swing.JButton deshacer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

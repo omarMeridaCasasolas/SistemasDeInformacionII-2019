@@ -101,12 +101,12 @@ public class WindowLogin extends javax.swing.JFrame {
                 dispose();
             }else{
                 if(windowNumber == 2){
-                    WindowSeller window = new WindowSeller();
+                    WindowWarehouseManager window = new WindowWarehouseManager();
                     window.setVisible(true);
                     dispose();
                 }else{
                     if(windowNumber == 3){
-                        WindowWarehouseManager window = new WindowWarehouseManager();
+                        WindowSeller window = new WindowSeller();
                         window.setVisible(true);
                         dispose();
                     }else{
