@@ -1,6 +1,8 @@
 
 package interfaz;
 
+import conexion.Conexion;
+
 public class WindowUpdate extends javax.swing.JFrame {
     private static String[] datos;
     public WindowUpdate(String[] d) {
@@ -59,6 +61,11 @@ public class WindowUpdate extends javax.swing.JFrame {
         });
 
         save.setText("Guardar");
+        save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Cargo");
 
@@ -169,16 +176,28 @@ public class WindowUpdate extends javax.swing.JFrame {
     private void deshacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deshacerActionPerformed
         charge();
     }//GEN-LAST:event_deshacerActionPerformed
+
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+        String url = "update empFarmacia set nomEmp = '"+name.getText()+"', apeEmp = '"+surname.getText()+"', ciEmp = '"+ci.getText()+"', fecNacEmp = '"+birthDate.getText()+"', dirEmp = '"+address.getText()+"', telEmp = '"+phone.getText()+"', cargoEmp = '"+cargo.getText()+"' where empfarmacia.idEmp = "+datos[0];
+        Conexion cn = new Conexion();
+        cn.conectar();
+        if(cn.update(url)){
+            WindowSearch window = new WindowSearch();
+            window.setVisible(true);
+            dispose();
+        }
+        cn.desconectar();
+    }//GEN-LAST:event_saveActionPerformed
     
     private boolean charge(){
         boolean res = false;
-        name.setText(datos[0]);
-        surname.setText(datos[1]);
-        ci.setText(datos[2]);
-        birthDate.setText(datos[3]);
-        address.setText(datos[4]);
-        phone.setText(datos[5]);
-        cargo.setText(datos[6]);
+        name.setText(datos[1]);
+        surname.setText(datos[2]);
+        ci.setText(datos[3]);
+        birthDate.setText(datos[4]);
+        address.setText(datos[5]);
+        phone.setText(datos[6]);
+        cargo.setText(datos[7]);
         return res;
     }
     

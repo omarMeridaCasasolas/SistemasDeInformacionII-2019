@@ -93,7 +93,7 @@ public class WindowLogin extends javax.swing.JFrame {
         String inUsername = username.getText();
         char[] in = pasword.getPassword();
         String inPasword = new String(in);
-        if(inUsername.length() > 0 && inPasword.length() > 0){
+        if(valido(inUsername, 1) && valido(inPasword, 1)){
             windowNumber = login(inUsername, inPasword);
             if(windowNumber == 1){
                 WindowPharmacyManager window = new WindowPharmacyManager();
@@ -110,12 +110,12 @@ public class WindowLogin extends javax.swing.JFrame {
                         window.setVisible(true);
                         dispose();
                     }else{
-                        JOptionPane.showMessageDialog(null, "Usuario no encontrado", "Error al iniciar secion", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Usuario no encontrado\nUsuario y contraseña no coinciden", "Error al iniciar seción", JOptionPane.ERROR_MESSAGE);
                     }
                 }        
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Datos Erroneos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ingrese:\nUsuario = {0,..,9}\n Pasword = {0,..,9}", "Error al ingresar datos", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_loginAcceptActionPerformed
 
@@ -145,7 +145,36 @@ public class WindowLogin extends javax.swing.JFrame {
         }
         return res;
     }
-
+    
+    // P = 1 {0,..,9}; p = 0 {a,..,z,A,..,Z,0,..,9}
+    private boolean valido(String cad, int p){
+        boolean res = true;
+        int i = 0;
+        if(cad.length() == 0)
+            res = false;
+        else
+            if(p == 0)
+                while(i < cad.length() && res != false){
+                    if(cad.charAt(i) < 48 || cad.charAt(i) > 122)
+                        res = false;
+                    else
+                        if(cad.charAt(i) > 57 && cad.charAt(i) < 65)
+                            res = false;
+                        else
+                            if(cad.charAt(i) > 90 && cad.charAt(i) < 97)
+                                res = false;
+                    i++;
+                }
+            else
+                if(p == 1)
+                    while(i < cad.length() && res != false){
+                        if(cad.charAt(i) < 48 || cad.charAt(i) > 57)
+                            res = false;
+                        i++;
+                    }
+        return res;
+    }
+    
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

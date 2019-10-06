@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 public class WindowSearch extends javax.swing.JFrame {
 
@@ -94,39 +95,42 @@ public class WindowSearch extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-        String nombre = inSearch.getText();
-        if(nombre.length() > 0){
-            String[] datos = search(nombre);
+        String cad = inSearch.getText();
+        if(valido(cad, 1)){
+            int id = Integer.parseInt(cad);
+            String[] datos = search(id);
             if(datos.length > 0){
                 WindowUpdate window = new WindowUpdate(datos);
                 window.setVisible(true);
                 dispose();
-            }
-        }else{
-        
-        }
+            }else
+                JOptionPane.showMessageDialog(null, "ID no encontrado\nPor favor ingrese un ID registrado", "Error ID no registrado", JOptionPane.ERROR_MESSAGE);
+        }else
+            JOptionPane.showMessageDialog(null, "Ingrese:\nID = {0,..,9}", "Error al ingresar ID", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_searchActionPerformed
     
-    private String[] search(String nom){
+    private String[] search(int codigo){
         String res[] = {};
         Conexion cn = new Conexion();
-        String url = "select * from empFarmacia where nomEmp = '"+nom+"'";
+        String url = "select * from empFarmacia where idEmp = '"+codigo+"'";
         cn.conectar();
         ResultSet rs = cn.rs(url);
         try {
             if(rs.next()){
-                res = new String[7];
-                res[0] = rs.getString("nomEmp");
-                res[1] = rs.getString("apeEmp");
-                res[2] = rs.getString("ciEmp");
-                res[3] = rs.getString("fecNacEmp");
-                res[4] = rs.getString("dirEmp");
-                res[5] = rs.getString("telEmp");
-                res[6] = rs.getString("cargoEmp");
+                res = new String[8];
+                res[0] = rs.getString("idEmp");
+                res[1] = rs.getString("nomEmp");
+                res[2] = rs.getString("apeEmp");
+                res[3] = rs.getString("ciEmp");
+                res[4] = rs.getString("fecNacEmp");
+                res[5] = rs.getString("dirEmp");
+                res[6] = rs.getString("telEmp");
+                res[7] = rs.getString("cargoEmp");
             }
         } catch (SQLException ex) {
             Logger.getLogger(WindowSearch.class.getName()).log(Level.SEVERE, null, ex);
         }
+        cn.desconectar();
         return res;
     }
     
@@ -137,26 +141,23 @@ public class WindowSearch extends javax.swing.JFrame {
             try{
                 DefaultListModel model = new DefaultListModel<>();
                 model.addElement("::::::::::::::::::::::::::");
-                model.addElement("::::::::::::::::::::::::::");
                 model.addElement("Administración de Farmacia");
                 ResultSet rs;
                 rs = cn.rs("select * from empFarmacia where cargoEmp = 'AdministracionFarmacia'");
                 while(rs.next()){
-                    model.addElement(rs.getString("nomEmp")+" "+rs.getString("apeEmp"));
+                    model.addElement("ID = "+rs.getString("idEmp")+"  >  "+rs.getString("nomEmp")+" "+rs.getString("apeEmp"));
                 }
-                model.addElement("::::::::::::::::::::::::::");
                 model.addElement("::::::::::::::::::::::::::");
                 model.addElement("Control del Almacén");
                 rs = cn.rs("select * from empFarmacia where cargoEmp = 'ControlAlmacen'");
                 while(rs.next()){
-                    model.addElement(rs.getString("nomEmp")+" "+rs.getString("apeEmp"));
+                    model.addElement("ID = "+rs.getString("idEmp")+"  >  "+rs.getString("nomEmp")+" "+rs.getString("apeEmp"));
                 }
-                model.addElement("::::::::::::::::::::::::::");
                 model.addElement("::::::::::::::::::::::::::");
                 model.addElement("Atención al Cliente");
                 rs = cn.rs("select * from empFarmacia where cargoEmp = 'AtencionCliente'");
                 while(rs.next()){
-                    model.addElement(rs.getString("nomEmp")+" "+rs.getString("apeEmp"));
+                    model.addElement("ID = "+rs.getString("idEmp")+"  >  "+rs.getString("nomEmp")+" "+rs.getString("apeEmp"));
                 }
                 list.setModel(model);
                 res = true;
@@ -165,6 +166,35 @@ public class WindowSearch extends javax.swing.JFrame {
             }
             cn.desconectar();
         }
+        return res;
+    }
+        
+    // P = 1 {0,..,9}; p = 0 {a,..,z,A,..,Z,0,..,9}
+    private boolean valido(String cad, int p){
+        boolean res = true;
+        int i = 0;
+        if(cad.length() == 0)
+            res = false;
+        else
+            if(p == 0)
+                while(i < cad.length() && res != false){
+                    if(cad.charAt(i) < 48 || cad.charAt(i) > 122)
+                        res = false;
+                    else
+                        if(cad.charAt(i) > 57 && cad.charAt(i) < 65)
+                            res = false;
+                        else
+                            if(cad.charAt(i) > 90 && cad.charAt(i) < 97)
+                                res = false;
+                    i++;
+                }
+            else
+                if(p == 1)
+                    while(i < cad.length() && res != false){
+                        if(cad.charAt(i) < 48 || cad.charAt(i) > 57)
+                            res = false;
+                        i++;
+                    }
         return res;
     }
     
