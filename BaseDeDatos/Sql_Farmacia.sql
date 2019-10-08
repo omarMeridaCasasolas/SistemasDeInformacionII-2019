@@ -37,7 +37,7 @@ create table EmpFarmacia
 /*==============================================================*/
 create table MEDICAMENTO
 (
-   IDMEDICAMENTO        varchar(50) not null,
+   IDMEDICAMENTO        int not null auto_increment,
    NOMBREMEDICAMENTO    varchar(50) not null,
    CODIGOSENASAG        varchar(20) not null,
    PREESCRIPCION        bool not null,
@@ -63,7 +63,7 @@ create table PROMOCION
 /*==============================================================*/
 create table PROMOCION_PRODUCTO
 (
-   IDMEDICAMENTO        varchar(50) not null,
+   IDMEDICAMENTO        int not null,
    IDPROMOCION          varchar(20) not null,
    DESCUENTOMEDIACMENTO decimal,
    TIPOPROMOCION        varchar(30),
@@ -74,7 +74,7 @@ create table PROMOCION_PRODUCTO
 /*==============================================================*/
 create table MEDICAMENTO_RESERVA 
 (
-   IDMEDICAMENTO        varchar(50) not null,
+   IDMEDICAMENTO        int not null,
    IDRESERVA            varchar(25) not null,
    primary key (IDMEDICAMENTO, IDRESERVA)
 );
